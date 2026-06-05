@@ -16,7 +16,7 @@
 html,body{height:100%;background:#f4faf5;color:#1a2e22;font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;overflow:hidden;}
 
 /* TOPBAR */
-#topbar{position:fixed;top:0;left:0;right:0;z-index:500;background:linear-gradient(135deg,#4a7860 0%,#6a9e80 100%);box-shadow:0 2px 8px rgba(30,90,60,.18);}
+#topbar{position:fixed;top:0;left:0;right:0;z-index:500;background:linear-gradient(135deg,#4a7860 0%,#6a9e80 100%);box-shadow:0 2px 12px rgba(0,0,0,.25);}
 #topbar-inner{display:flex;align-items:center;gap:10px;padding:10px 14px 6px;padding-top:calc(10px + env(safe-area-inset-top,0px));}
 #topbar h1{color:#fff;font-size:.92em;font-weight:700;flex:1;line-height:1.3;text-shadow:0 1px 3px rgba(0,0,0,.18);}
 #topbar h1 span{display:block;font-size:.72em;font-weight:400;opacity:.88;margin-top:1px;}
@@ -134,10 +134,70 @@ html,body{height:100%;background:#f4faf5;color:#1a2e22;font-family:-apple-system
 .ibtn:active{opacity:.7;}
 .ibtn-site{background:#4a7860;}.ibtn-article{background:#3a6b8a;}.ibtn-photo{background:#7b52ab;}
 .btn-info{background:#8a6a4a;}
+
+
+/* ── SPLASH SCREEN ── */
+#splash{position:fixed;inset:0;z-index:9999;background:#0a1a10;overflow:hidden;}
+.ss-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.3s ease;}
+.ss-slide.active{opacity:1;animation:kb 7s ease-out forwards;}
+@keyframes kb{0%{transform:scale(1.07);}100%{transform:scale(1.0);}}
+.ss-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.18) 50%,rgba(0,0,0,.04) 100%);}
+.ss-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:calc(80px + env(safe-area-inset-bottom));text-align:center;}
+.ss-leaf{font-size:2.2em;margin-bottom:8px;filter:drop-shadow(0 2px 10px rgba(0,0,0,.5));}
+.ss-main{font-size:2em;font-weight:800;color:#fff;letter-spacing:.22em;text-shadow:0 2px 14px rgba(0,0,0,.65);}
+.ss-dates{font-size:.83em;color:rgba(255,255,255,.78);letter-spacing:.14em;margin-top:6px;text-shadow:0 1px 6px rgba(0,0,0,.5);}
+.ss-cap{margin-top:18px;min-height:36px;}
+.ss-place{display:block;font-size:1em;font-weight:700;color:rgba(255,220,150,.95);letter-spacing:.06em;text-shadow:0 1px 6px rgba(0,0,0,.5);}
+.ss-sub{display:block;font-size:.72em;color:rgba(255,255,255,.72);margin-top:3px;letter-spacing:.04em;}
+.ss-dots{display:flex;gap:7px;margin-top:14px;justify-content:center;}
+.ss-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.32);transition:background .4s,transform .4s;}
+.ss-dot.on{background:rgba(255,220,150,.95);transform:scale(1.3);}
+.ss-skip{position:absolute;top:calc(16px + env(safe-area-inset-top));right:16px;color:rgba(255,255,255,.72);font-size:.7em;background:rgba(0,0,0,.38);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:7px 14px;border-radius:18px;border:1px solid rgba(255,255,255,.2);cursor:pointer;user-select:none;}
+.ss-bar-wrap{position:absolute;bottom:0;left:0;right:0;height:2.5px;background:rgba(255,255,255,.15);}
+#ssBar{height:100%;background:linear-gradient(to right,rgba(255,200,100,.8),rgba(255,255,255,.85));width:0;transition:width linear;}
 </style>
 </head>
 <body>
 
+
+<div id="splash" onclick="exitSplash()">
+  <div class="ss-slide  active" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Matsushima.jpg/960px-Matsushima.jpg')" data-place="松島" data-sub="日本三大名景"></div>
+  <div class="ss-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Miyagikyo_Distillery_01.jpg/960px-Miyagikyo_Distillery_01.jpg')" data-place="Nikka 宮城峽蒸溜所" data-sub="東北の威士忌"></div>
+  <div class="ss-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Lake_Inawashiro_view_from_Mt.Bandai.jpg/960px-Lake_Inawashiro_view_from_Mt.Bandai.jpg')" data-place="豬苗代湖" data-sub="清晨的磐梯山倒影"></div>
+  <div class="ss-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Ouchijuku_town_like_Edo_era_-_panoramio.jpg/960px-Ouchijuku_town_like_Edo_era_-_panoramio.jpg')" data-place="大内宿" data-sub="江戶時代茅草古村"></div>
+  <div class="ss-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/AizuCastle.jpg/960px-AizuCastle.jpg')" data-place="鶴之城" data-sub="會津若松の象徵"></div>
+  <div class="ss-grad"></div>
+  <div class="ss-content">
+    <div class="ss-icon">🌿</div>
+    <div class="ss-title">仙台・東北</div>
+    <div class="ss-sub">七天旅遊行程　7/18 – 7/25</div>
+    <div class="ss-caption"><span class="ss-place" id="ssPlace">松島</span><span id="ssSub">日本三大名景</span></div>
+    <div class="ss-dots" id="ssDots"><div class="ss-dot  on"></div><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div></div>
+  </div>
+  <div class="ss-skip">點擊跳過 ▶</div>
+  <div class="ss-progress"><div id="ssBar"></div></div>
+</div>
+
+<div id="splash">
+<div class="ss-slide  active" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/211030_Zuigan-ji_Matsushima_Miyagi_pref_Japan10s3.jpg/1280px-211030_Zuigan-ji_Matsushima_Miyagi_pref_Japan10s3.jpg')" data-place="瑞巖寺・松島" data-sub="伊達政宗菩提寺，桃山式木造建築"></div>
+<div class="ss-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Miyagikyo_Distillery_01.jpg/1280px-Miyagikyo_Distillery_01.jpg')" data-place="Nikka 宮城峽蒸溜所" data-sub="翠綠山林中的威士忌聖地"></div>
+<div class="ss-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/AizuCastle.jpg/1280px-AizuCastle.jpg')" data-place="鶴之城・會津若松" data-sub="日本東北最美的城郭建築"></div>
+<div class="ss-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Ouchijuku_town_like_Edo_era_-_panoramio.jpg/960px-Ouchijuku_town_like_Edo_era_-_panoramio.jpg')" data-place="大内宿" data-sub="江戶時代原封不動的茅草宿場町"></div>
+<div class="ss-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Aizu_Sazaedou.jpg/960px-Aizu_Sazaedou.jpg')" data-place="榮螺堂" data-sub="世界唯一六角三層螺旋建築"></div>
+<div class="ss-grad"></div>
+<div class="ss-content">
+  <div class="ss-leaf">🌿</div>
+  <div class="ss-main">仙台・東北</div>
+  <div class="ss-dates">七天旅遊行程　7/18 – 7/25</div>
+  <div class="ss-cap">
+    <span class="ss-place" id="ssPlace">瑞巖寺・松島</span>
+    <span class="ss-sub" id="ssSub">伊達政宗菩提寺，桃山式木造建築</span>
+  </div>
+  <div class="ss-dots"><div class="ss-dot  on"></div><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div></div>
+</div>
+<div class="ss-skip" id="ssSkip">點擊跳過 ▶</div>
+<div class="ss-bar-wrap"><div id="ssBar"></div></div>
+</div>
 <div id="topbar">
   <div id="topbar-inner">
     <div style="font-size:1.4em">🌿</div>
@@ -225,7 +285,7 @@ html,body{height:100%;background:#f4faf5;color:#1a2e22;font-family:-apple-system
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#d8eeda">🏨</div>
 <div class="sc-meta"><div class="sc-time">住宿（全程）</div><div class="sc-name">仙台大和魯內飯店</div><div class="sc-sub">仙台駅東口步行5分鐘・Toyota取車點附近</div></div></div>
-<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/1aTpSrxSBm6RAh3g9" target="_blank">📍 地圖</a></div></div>
+<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/1aTpSrxSBm6RAh3g9" target="_blank">📍 地圖</a><a class="btn btn-info" onclick="showInfo('hotel')">📖 介紹</a></div></div>
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#e8f8ee">🚃</div>
 <div class="sc-meta"><div class="sc-time">16:10 抵達後</div><div class="sc-name">仙台機場 Access 線</div><div class="sc-sub">約25分鐘直達仙台駅・¥6,930（11人）</div></div></div>
@@ -264,11 +324,11 @@ html,body{height:100%;background:#f4faf5;color:#1a2e22;font-family:-apple-system
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#ffe8e8">🍕</div>
 <div class="sc-meta"><div class="sc-time">午餐①</div><div class="sc-name">Les Copains de Campagne</div><div class="sc-sub">咖哩披薩・作並エリア・僅週末</div></div></div>
-<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/6GX9mWSNMMjpwLAy7" target="_blank">📍</a><a class="btn btn-tab" href="https://tabelog.com/miyagi/A0401/A040101/4002028/" target="_blank">🍽 Tab</a></div></div>
+<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/6GX9mWSNMMjpwLAy7" target="_blank">📍</a><a class="btn btn-tab" href="https://tabelog.com/miyagi/A0401/A040101/4002028/" target="_blank">🍽 Tab</a><a class="btn btn-info" onclick="showInfo('campagne')">📖 介紹</a></div></div>
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#ffe8e8">🍜</div>
 <div class="sc-meta"><div class="sc-time">午餐②</div><div class="sc-name">どうだんの里（蕎麥麵）</div><div class="sc-sub">作並エリア・傳統蕎麥麵</div></div></div>
-<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/ft92dpsb4ons9pQx8" target="_blank">📍</a><a class="btn btn-tab" href="https://tabelog.com/miyagi/A0401/A040101/4002395/" target="_blank">🍽 Tab</a></div></div>
+<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/ft92dpsb4ons9pQx8" target="_blank">📍</a><a class="btn btn-tab" href="https://tabelog.com/miyagi/A0401/A040101/4002395/" target="_blank">🍽 Tab</a><a class="btn btn-info" onclick="showInfo('dodan')">📖 介紹</a></div></div>
   <div class="sec-lbl">🏝 松島觀光（14:00 抵達）</div>
   <div class="note" style="">⚠ 停「松島海岸站」周邊停車場，勿開往「松島站」</div>
   <div class="spot-card">
@@ -291,7 +351,7 @@ html,body{height:100%;background:#f4faf5;color:#1a2e22;font-family:-apple-system
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#ffe8e8">🦀</div>
 <div class="sc-meta"><div class="sc-time">晚餐②</div><div class="sc-name">郷土料理 味勘</div><div class="sc-sub">烤牡蠣吃到飽 45分 ¥3,300</div></div></div>
-<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/cMG94wXDvtsJ6kaw9" target="_blank">📍 地圖</a></div></div>
+<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/cMG94wXDvtsJ6kaw9" target="_blank">📍 地圖</a><a class="btn btn-info" onclick="showInfo('ajikan')">📖 介紹</a></div></div>
 </div>
 
 <!-- Day 3 -->
@@ -304,7 +364,7 @@ html,body{height:100%;background:#f4faf5;color:#1a2e22;font-family:-apple-system
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#e8f5ee">⛩</div>
 <div class="sc-meta"><div class="sc-time">下午</div><div class="sc-name">上杉神社</div><div class="sc-sub">伯爵邸旁邊步行即到・供奉上杉謙信</div></div></div>
-<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/Ei8NNiZeVRcc5UVk9" target="_blank">📍 地圖</a></div></div>
+<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/Ei8NNiZeVRcc5UVk9" target="_blank">📍 地圖</a><a class="btn btn-info" onclick="showInfo('shrine')">📖 介紹</a></div></div>
   <div class="sec-lbl">🛒 入住前超市採買（民宿偏遠，必買！）</div>
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#fef9c0">🛒</div>
@@ -361,11 +421,11 @@ html,body{height:100%;background:#f4faf5;color:#1a2e22;font-family:-apple-system
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#e8f5ee">🛍</div>
 <div class="sc-meta"><div class="sc-time">景點</div><div class="sc-name">古町商店街</div><div class="sc-sub">新潟市中心商圈・信濃川夜景</div></div></div>
-<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/uuESbkHvmkKzzM8dA" target="_blank">📍 地圖</a></div></div>
+<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/uuESbkHvmkKzzM8dA" target="_blank">📍 地圖</a><a class="btn btn-info" onclick="showInfo('furumachi')">📖 介紹</a></div></div>
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#e8f5ee">🏛</div>
 <div class="sc-meta"><div class="sc-time">景點</div><div class="sc-name">舊齋藤家別邸</div><div class="sc-sub">重要文化財・江戶時代庭園</div></div></div>
-<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/m3hvRaxi1vJjyDFL6" target="_blank">📍 地圖</a></div></div>
+<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/m3hvRaxi1vJjyDFL6" target="_blank">📍 地圖</a><a class="btn btn-info" onclick="showInfo('saito')">📖 介紹</a></div></div>
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#f0e8ff">🍶</div>
 <div class="sc-meta"><div class="sc-time">體驗　免費</div><div class="sc-name">今代司酒造</div><div class="sc-sub">越光米日本酒試飲・免費參觀</div></div></div>
@@ -373,7 +433,7 @@ html,body{height:100%;background:#f4faf5;color:#1a2e22;font-family:-apple-system
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#e8f5ee">🐟</div>
 <div class="sc-meta"><div class="sc-time">景點</div><div class="sc-name">新潟市水族館 マリンピア日本海</div><div class="sc-sub">日本海邊最大水族館</div></div></div>
-<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/pTZ1nUcpsnCTTpC36" target="_blank">📍 地圖</a></div></div>
+<div class="sc-btns"><a class="btn btn-map" href="https://maps.app.goo.gl/pTZ1nUcpsnCTTpC36" target="_blank">📍 地圖</a><a class="btn btn-info" onclick="showInfo('aquarium')">📖 介紹</a></div></div>
   <div class="sec-lbl">🍜 五泉市民宿附近餐廳</div>
   <div class="spot-card">
 <div class="sc-head"><div class="sc-icon" style="background:#ffe8e8">🍜</div>
@@ -699,18 +759,18 @@ setHeights();
 initMiniMap();
 
 var SI={
-gyutan:{title:'仙台名物 牛舌（牛たん）',desc:'仙台最具代表性的在地美食，以厚切牛舌佐麥飯和牛尾湯聞名全日本。二戰後由仙台廚師佐野啟四郎發明，將原本不受重視的牛舌以鹽麴醃製後炭烤，造就獨特的Q彈口感。仙台車站3F「牛たん通り」聚集善治郎、利久、伊達の牛たん等名店，人多建議先抽號碼牌再逛百貨。推薦套餐通常含牛舌定食（3–5片）＋麥飯＋牛尾湯，每人約¥1,500–3,000。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Gyutan_teishoku.JPG/500px-Gyutan_teishoku.JPG"],links:[['📖 牛舌通り中文介紹','https://matcha-jp.com/tw/5819','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=仙台駅+牛たん通り&tbm=isch','photo']]},
-nikka:{title:'Nikka 宮城峽蒸溜所',desc:'NIKKA威士忌的第二個蒸溜所，1969年建立於仙台郊區翠綠山林中。廣瀬川和新川的清冽水源搭配蘇格蘭式鍋型蒸餾器，共同成就細緻優雅的威士忌風味。廠區保留老式蒸餾器和熟成倉庫。導覽行程約70分鐘，含免費試飲多款威士忌，是東北最受歡迎的酒廠體驗。⚠ 開車者請注意不得飲酒。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Nikka_2008-05-22.png/500px-Nikka_2008-05-22.png"],links:[['🔗 官方網站','https://www.nikka.com/distilleries/miyagikyo/','site'],['📖 中文介紹','https://tw.discoversendai.travel/places/nikka-whisky-miyagikyo-distillery/','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=Nikka宮城峡蒸溜所&tbm=isch','photo']]},
-matsushima:{title:'松島（瑞巖寺・五大堂）',desc:'日本三大名景之一，松島灣由260多座形態各異的小島構成絕美海景。瑞巖寺是伊達政宗的菩提寺，有宏偉的參道古杉和精緻的桃山式建築；五大堂矗立於小島上，以透かし橋（透空橋）相連，是松島的標誌性地標。遊覽船航程約50分鐘，從海上欣賞群島全貌，末班船可賞夕陽餘暉。入場費：瑞巖寺¥700。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/211030_Kameshima_Matsushima_Miyagi_pref_Japan01n.jpg/500px-211030_Kameshima_Matsushima_Miyagi_pref_Japan01n.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/211030_Zuigan-ji_Matsushima_Miyagi_pref_Japan10s3.jpg/500px-211030_Zuigan-ji_Matsushima_Miyagi_pref_Japan10s3.jpg"],links:[['🔗 瑞巖寺官網','https://www.zuiganji.or.jp/','site'],['📖 松島中文介紹','https://matcha-jp.com/tw/3066','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=松島+宮城&tbm=isch','photo']]},
-uesugi:{title:'上杉伯爵邸（米澤牛）',desc:'國家登錄有形文化財，原為上杉伯爵家的別邸（1925年建造），現為品嚐米澤牛的高級餐廳。明治時代的木造洋式建築，從餐廳可俯瞰精心修剪的日式庭園，環境典雅古樸。米澤牛與松阪牛、神戶牛並稱日本三大和牛，以細緻霜降肉質和濃郁風味聞名。可選擇壽喜燒、涮涮鍋或鐵板燒套餐，11人用餐務必提前訂位。',imgs:[],links:[['🔗 官方網站','http://uesugi-kinenkan.jp/','site'],['🍽 Tabelog訂位','https://tabelog.com/yamagata/A0602/A060201/6000443/','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=上杉伯爵邸+米沢&tbm=isch','photo']]},
-inawashiro:{title:'豬苗代湖 & 湖邊小屋',desc:'福島縣最大湖泊，也是日本第四大湖，湖水清澈湛藍，磐梯山倒映湖面，四季景色各異。夏季湖水溫暖，是獨木舟、SUP等水上活動的天堂。住宿的湖邊小屋備有獨木舟及救生衣，清晨可划船看日出、傍晚岸邊野餐賞夕陽，是整趟旅程最放鬆愜意的時光。整片湖岸幾乎沒有人工建設，自然純淨。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Lake_Inawashiro_view_from_Mt.Bandai.jpg/500px-Lake_Inawashiro_view_from_Mt.Bandai.jpg"],links:[['🔗 猪苗代観光情報','https://www.bandaisan.or.jp/','site'],['📸 Google圖片搜尋','https://www.google.com/search?q=猪苗代湖+福島&tbm=isch','photo']]},
-bandai:{title:'磐梯山',desc:'福島縣的象徵，海拔1816公尺的活火山。1888年大噴發形成現在裏磐梯美麗的湖沼群「五色沼」。從豬苗代湖畔可清晰眺望其雄偉輪廓。山麓是國家公園，夏季高山植物盛開，秋季楓葉如火如荼，是東北最具代表性的自然景觀之一，也是攀山健行的熱門路線。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Mt._Bandaisan_0811.JPG/500px-Mt._Bandaisan_0811.JPG"],links:[['🔗 磐梯山観光','https://www.bandaisan.or.jp/','site'],['📸 Google圖片搜尋','https://www.google.com/search?q=磐梯山+福島&tbm=isch','photo']]},
-ouchi:{title:'大内宿（大內宿）',desc:'江戶時代（約400年前）保留至今的宿場町（驛站），已被列為日本「重要傳統建築群保存地區」。整條街道兩側排列著茅草屋頂的民宅，現改為商店和餐廳，是日本保存最完整的宿場町之一。名物「ねぎそば」以一根整蔥代替筷子夾麵食用，獨特有趣且味道清甜。積雪季節的冬景也極為美麗。⚠ 建議8:30前到達，停車場極易客滿。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Ouchijuku_2006-11-12.jpg/500px-Ouchijuku_2006-11-12.jpg"],links:[['🔗 大內宿官網','https://www.ouchi-juku.com/','site'],['📖 中文介紹','https://matcha-jp.com/tw/7086','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=大内宿+福島&tbm=isch','photo']]},
-tsuruga:{title:'鶴之城（會津若松城）',desc:'又稱「鶴之城」，是會津若松市的象徵，初建於1384年，現存天守閣為1965年重建。1868年戊辰戰爭中，城中「白虎隊」少年誤以為城已陷落而集體自刃，悲壯故事至今仍為人傳誦。天守閣內設歷史博物館，登頂可俯瞰整個會津盆地。春季粉色櫻花環繞白色城牆，是東北最美的賞櫻名所之一。門票¥410。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Aizuwakamatsu_Castle_ac_%281%29.jpg/500px-Aizuwakamatsu_Castle_ac_%281%29.jpg"],links:[['🔗 官方網站','https://www.tsurugajo.com/','site'],['📖 中文介紹','https://matcha-jp.com/tw/2913','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=鶴ヶ城+会津若松&tbm=isch','photo']]},
-suehiro:{title:'末廣酒造 嘉永藏',desc:'創業於1765年（江戶中期）的老字號酒造，「嘉永藏」是1917年建造的國家登錄有形文化財倉庫。以会津盆地的雪融水和当地産酒米釀造多款清酒。導覽行程（約40分鐘）參觀傳統釀酒設備和歷史展示館，含試飲，¥400入場費物超所值。所購清酒可作為伴手禮，風味醇厚。',imgs:[],links:[['🔗 官方網站','https://www.sake-suehiro.jp/','site'],['📸 Google圖片搜尋','https://www.google.com/search?q=末廣酒造+嘉永蔵+会津若松&tbm=isch','photo']]},
-sazaedo:{title:'榮螺堂（さざえ堂）',desc:'建於1796年（江戶時代）的六角三層木造建築，高約16.5公尺，國家重要文化財。其最獨特之處是採用「雙螺旋坡道」設計：上樓與下樓走完全不同的斜坡通道，二者互不相交，確保人潮流暢。這種建築形式在世界上僅此一例，工藝令人嘆為觀止。整棟建築無一根釘子，以傳統榫卯工法建造。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Sazaedou_Aidu_Japan01.jpg/500px-Sazaedou_Aidu_Japan01.jpg"],links:[['🔗 官方介紹','http://www.sazaedo.jp/','site'],['📖 中文介紹','https://matcha-jp.com/tw/4826','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=さざえ堂+会津若松&tbm=isch','photo']]},
+gyutan:{title:'仙台名物 牛舌（牛たん）',desc:'仙台最具代表性的在地美食，以厚切牛舌佐麥飯和牛尾湯聞名全日本。二戰後由仙台廚師佐野啟四郎發明，將原本不受重視的牛舌以鹽麴醃製後炭烤，造就獨特的Q彈口感。仙台車站3F「牛たん通り」聚集善治郎、利久、伊達の牛たん等名店，人多建議先抽號碼牌再逛百貨。推薦套餐通常含牛舌定食（3–5片）＋麥飯＋牛尾湯，每人約¥1,500–3,000。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Gyutan_teishoku.JPG/500px-Gyutan_teishoku.JPG","https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Gyutan_karaage.jpg/500px-Gyutan_karaage.jpg"],links:[['📖 牛舌燒 中文維基','https://zh.wikipedia.org/wiki/牛舌燒','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=仙台駅+牛たん通り&tbm=isch','photo']]},
+nikka:{title:'Nikka 宮城峽蒸溜所',desc:'NIKKA威士忌的第二個蒸溜所，1969年建立於仙台郊區翠綠山林中。廣瀬川和新川的清冽水源搭配蘇格蘭式鍋型蒸餾器，共同成就細緻優雅的威士忌風味。廠區保留老式蒸餾器和熟成倉庫。導覽行程約70分鐘，含免費試飲多款威士忌，是東北最受歡迎的酒廠體驗。⚠ 開車者請注意不得飲酒。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Miyagikyo_Distillery_01.jpg/500px-Miyagikyo_Distillery_01.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Miyagikyo_Distillery_05.jpg/500px-Miyagikyo_Distillery_05.jpg"],links:[['🔗 官方網站','https://www.nikka.com/distilleries/miyagikyo/','site'],['📖 宮城峽蒸餾所 維基','https://zh.wikipedia.org/wiki/宮城峽蒸餾所','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=Nikka宮城峡蒸溜所&tbm=isch','photo']]},
+matsushima:{title:'松島（瑞巖寺・五大堂）',desc:'日本三大名景之一，松島灣由260多座形態各異的小島構成絕美海景。瑞巖寺是伊達政宗的菩提寺，有宏偉的參道古杉和精緻的桃山式建築；五大堂矗立於小島上，以透かし橋（透空橋）相連，是松島的標誌性地標。遊覽船航程約50分鐘，從海上欣賞群島全貌，末班船可賞夕陽餘暉。入場費：瑞巖寺¥700。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Matsushima.jpg/500px-Matsushima.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/211030_Kameshima_Matsushima_Miyagi_pref_Japan01n.jpg/500px-211030_Kameshima_Matsushima_Miyagi_pref_Japan01n.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/A_cruise_boat_at_Matsushima.jpg/500px-A_cruise_boat_at_Matsushima.jpg"],links:[['🔗 瑞巖寺官網','https://www.zuiganji.or.jp/','site'],['📖 松島 中文維基','https://zh.wikipedia.org/wiki/松島_(宮城縣)','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=松島+宮城&tbm=isch','photo']]},
+uesugi:{title:'上杉伯爵邸（米澤牛）',desc:'國家登錄有形文化財，原為上杉伯爵家的別邸（1925年建造），現為品嚐米澤牛的高級餐廳。明治時代的木造洋式建築，從餐廳可俯瞰精心修剪的日式庭園，環境典雅古樸。米澤牛與松阪牛、神戶牛並稱日本三大和牛，以細緻霜降肉質和濃郁風味聞名，11人用餐務必提前訂位。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Uesugi_Hakushakutei_and_moat_of_Yonezawa_Castle.jpg/500px-Uesugi_Hakushakutei_and_moat_of_Yonezawa_Castle.jpg"],links:[['🔗 官方網站','http://uesugi-kinenkan.jp/','site'],['🍽 Tabelog訂位','https://tabelog.com/yamagata/A0602/A060201/6000443/','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=上杉伯爵邸+米沢&tbm=isch','photo']]},
+inawashiro:{title:'豬苗代湖 & 湖邊小屋',desc:'福島縣最大湖泊，也是日本第四大湖，湖水清澈湛藍，磐梯山倒映湖面，四季景色各異。夏季湖水溫暖，是獨木舟、SUP等水上活動的天堂。住宿的湖邊小屋備有獨木舟及救生衣，清晨可划船看日出、傍晚岸邊野餐賞夕陽，是整趟旅程最放鬆愜意的時光。整片湖岸幾乎沒有人工建設，自然純淨。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Mt.Bandai_from_Lake_Inawashiro_02.jpg/500px-Mt.Bandai_from_Lake_Inawashiro_02.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Lake_Inawashiro_view_from_Mt.Bandai.jpg/500px-Lake_Inawashiro_view_from_Mt.Bandai.jpg"],links:[['🔗 猪苗代観光情報','https://www.bandaisan.or.jp/','site'],['📖 豬苗代湖 中文維基','https://zh.wikipedia.org/wiki/豬苗代湖','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=猪苗代湖+福島&tbm=isch','photo']]},
+bandai:{title:'磐梯山',desc:'福島縣的象徵，海拔1816公尺的活火山。1888年大噴發形成現在裏磐梯美麗的湖沼群「五色沼」。從豬苗代湖畔可清晰眺望其雄偉輪廓。山麓是國家公園，夏季高山植物盛開，秋季楓葉如火如荼，是東北最具代表性的自然景觀之一，也是攀山健行的熱門路線。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Mt.Bandai_from_Lake_Inawashiro_02.jpg/500px-Mt.Bandai_from_Lake_Inawashiro_02.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Mt._Bandaisan_0811.JPG/500px-Mt._Bandaisan_0811.JPG"],links:[['🔗 磐梯山観光','https://www.bandaisan.or.jp/','site'],['📖 磐梯山 中文維基','https://zh.wikipedia.org/wiki/磐梯山','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=磐梯山+福島&tbm=isch','photo']]},
+ouchi:{title:'大内宿（大內宿）',desc:'江戶時代（約400年前）保留至今的宿場町（驛站），已被列為日本「重要傳統建築群保存地區」。整條街道兩側排列著茅草屋頂的民宅，現改為商店和餐廳，是日本保存最完整的宿場町之一。名物「ねぎそば」以一根整蔥代替筷子夾麵食用，獨特有趣且味道清甜。積雪季節的冬景也極為美麗。⚠ 建議8:30前到達，停車場極易客滿。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Ouchijuku_2006-11-12.jpg/500px-Ouchijuku_2006-11-12.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Ouchijuku_town_like_Edo_era_-_panoramio.jpg/500px-Ouchijuku_town_like_Edo_era_-_panoramio.jpg"],links:[['🔗 大內宿官網','https://www.ouchi-juku.com/','site'],['📖 大內宿 中文維基','https://zh.wikipedia.org/wiki/大內宿','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=大内宿+福島&tbm=isch','photo']]},
+tsuruga:{title:'鶴之城（會津若松城）',desc:'又稱「鶴之城」，是會津若松市的象徵，初建於1384年，現存天守閣為1965年重建。1868年戊辰戰爭中，城中「白虎隊」少年誤以為城已陷落而集體自刃，悲壯故事至今仍為人傳誦。天守閣內設歷史博物館，登頂可俯瞰整個會津盆地。春季粉色櫻花環繞白色城牆，是東北最美的賞櫻名所之一。門票¥410。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/AizuCastle.jpg/500px-AizuCastle.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Aizuwakamatsu_Castle_ac_%281%29.jpg/500px-Aizuwakamatsu_Castle_ac_%281%29.jpg"],links:[['🔗 官方網站','https://www.tsurugajo.com/','site'],['📖 會津若松城 中文維基','https://zh.wikipedia.org/wiki/會津若松城','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=鶴ヶ城+会津若松&tbm=isch','photo']]},
+suehiro:{title:'末廣酒造 嘉永藏',desc:'創業於1765年（江戶中期）的老字號酒造，「嘉永藏」是1917年建造的國家登錄有形文化財倉庫。以会津盆地的雪融水和当地産酒米釀造多款清酒。導覽行程（約40分鐘）參觀傳統釀酒設備和歷史展示館，含試飲，¥400入場費物超所值。所購清酒可作為伴手禮，風味醇厚。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/%E6%9C%AB%E5%BB%A3%E9%85%92%E9%80%A0_2020.jpg/500px-%E6%9C%AB%E5%BB%A3%E9%85%92%E9%80%A0_2020.jpg"],links:[['🔗 官方網站','https://www.sake-suehiro.jp/','site'],['📸 Google圖片搜尋','https://www.google.com/search?q=末廣酒造+嘉永蔵+会津若松&tbm=isch','photo']]},
+sazaedo:{title:'榮螺堂（さざえ堂）',desc:'建於1796年（江戶時代）的六角三層木造建築，高約16.5公尺，國家重要文化財。其最獨特之處是採用「雙螺旋坡道」設計：上樓與下樓走完全不同的斜坡通道，二者互不相交，確保人潮流暢。這種建築形式在世界上僅此一例，工藝令人嘆為觀止。整棟建築無一根釘子，以傳統榫卯工法建造。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Aizu_Sazaedou.jpg/500px-Aizu_Sazaedou.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Sazaedou_Aidu_Japan01.jpg/500px-Sazaedou_Aidu_Japan01.jpg"],links:[['🔗 官方介紹','http://www.sazaedo.jp/','site'],['📖 榮螺堂 中文維基','https://zh.wikipedia.org/wiki/榮螺堂','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=さざえ堂+会津若松&tbm=isch','photo']]},
 imayo:{title:'今代司酒造',desc:'創業於1767年（江戶中期），是新潟市內保留傳統手工釀造工法的老字號酒造。以「全量純米造り」為最大特色，以越後平野的越光米和阿賀野川伏流水釀造。免費導覽行程約40分鐘，可試飲多款純米酒及大吟釀等高級酒款，是新潟最推薦的酒造體驗。購買的清酒可在日本境內宅配寄回台灣。',imgs:[],links:[['🔗 官方網站','https://imayotsukasa.co.jp/','site'],['📸 Google圖片搜尋','https://www.google.com/search?q=今代司酒造+新潟市&tbm=isch','photo']]},
-noguchi:{title:'野口英世記念館',desc:'日本知名細菌學家野口英世（1876–1928）的出生地。野口英世一生克服貧困與身體殘疾，研究黃熱病、梅毒等傳染病，最終在非洲因感染黃熱病而犧牲。其肖像曾印製於日幣千元紙幣。記念館保留了他童年生活的茅草屋，並展示其生涯事蹟、研究成果及往來書信。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Noguchi_Hideyo.jpg/500px-Noguchi_Hideyo.jpg"],links:[['🔗 官方網站','https://www.noguchihideyo.or.jp/','site'],['📸 Google圖片搜尋','https://www.google.com/search?q=野口英世記念館+猪苗代&tbm=isch','photo']]}
+noguchi:{title:'野口英世記念館',desc:'日本知名細菌學家野口英世（1876–1928）的出生地。野口英世一生克服貧困與身體殘疾，研究黃熱病、梅毒等傳染病，最終在非洲因感染黃熱病而犧牲。其肖像曾印製於日幣千元紙幣。記念館保留了他童年生活的茅草屋，並展示其生涯事蹟、研究成果及往來書信。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Noguchi_Hideyo.jpg/500px-Noguchi_Hideyo.jpg"],links:[['🔗 官方網站','https://www.noguchihideyo.or.jp/','site'],['📖 野口英世 中文維基','https://zh.wikipedia.org/wiki/野口英世','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=野口英世記念館+猪苗代&tbm=isch','photo']]}
 };
 function showInfo(k){
   var d=SI[k]; if(!d)return;
@@ -725,7 +785,15 @@ function showInfo(k){
       var im=document.createElement('img');
       im.className='info-img';
       im.referrerPolicy='no-referrer';
-      im.onerror=function(){this.parentNode.style.display='none';};
+      im.onerror=function(){this.parentNode.style.display='none';,
+shrine:{title:'上杉神社',desc:'位於米澤城遺址（舞鶴城）內，供奉戰國名將上杉謙信。上杉謙信以「義」聞名天下，被譽為「戰國最強武將」，神社境內楓樹成蔭，秋季紅葉絢麗。緊鄰上杉伯爵邸，米澤牛午餐後步行即可抵達，是米澤市最重要的歷史勝地。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Haiden_of_Uesugi_Shrine.jpg/500px-Haiden_of_Uesugi_Shrine.jpg"],links:[['🔗 官方網站','https://www.uesugi-jinja.or.jp/','site'],['📖 中文維基','https://zh.wikipedia.org/wiki/上杉神社','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=上杉神社+米沢&tbm=isch','photo']]},
+furumachi:{title:'古町商店街（新潟）',desc:'新潟市傳統的商業中心，被稱為「新潟的銀座」，歷史超過400年。古町通是長達約1.5公里的商店街，匯聚老字號和風商店、現代餐廳和咖啡廳。緊鄰信濃川河畔，傍晚沿河散步，夕陽映照在日本最長河流的水面上，景色如畫。是品嚐新潟地酒和新鮮魚貝料理的最佳地點。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Niigata_Furumachi-dori8_20131021.JPG/500px-Niigata_Furumachi-dori8_20131021.JPG","https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Niigata_Furumachi_REFURU_Nishibori_ROSA_Entrance_May2023.jpg/500px-Niigata_Furumachi_REFURU_Nishibori_ROSA_Entrance_May2023.jpg"],links:[['📖 中文維基','https://zh.wikipedia.org/wiki/古町_(新潟市)','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=古町商店街+新潟&tbm=isch','photo']]},
+saito:{title:'舊齋藤家別邸',desc:'新潟縣指定有形文化財，建於1920年代，是新潟富商齋藤家的夏日別邸。木造日式建築與精心設計的回遊式庭園相映成趣，庭園內植有大型松樹和岩石造景，四季景色各異。春季杜鵑、夏季池畔綠意、秋季紅葉都極為優美。每年定期舉辦傳統藝能展演和茶會。入場費約¥260，是新潟市中心不可錯過的文化景點。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Kyusaitouke002.jpg/500px-Kyusaitouke002.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Kyusaitouke001.jpg/500px-Kyusaitouke001.jpg"],links:[['📖 中文維基','https://zh.wikipedia.org/wiki/舊齋藤家別邸','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=旧斎藤家別邸+新潟&tbm=isch','photo']]},
+aquarium:{title:'新潟市水族館 マリンピア日本海',desc:'日本海沿岸規模最大的水族館，1989年開館，坐落於新潟市海岸邊。館內飼育約500種共2萬條以上的海洋生物，包括日本海特有魚種和世界各地的海洋動物。海豚和海獅秀每天定時舉行，深受兒童喜愛。緊鄰日本海，天氣好時可在水族館旁欣賞大海景色。適合帶孩子前往，也是雨天的絕佳備案。',imgs:["https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Niigata_City_Aquarium_Marinepia_Nihonkai.jpg/500px-Niigata_City_Aquarium_Marinepia_Nihonkai.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Niigata_City_Aquarium_%28MARINEPIA_NIHONKAI%29.jpg/500px-Niigata_City_Aquarium_%28MARINEPIA_NIHONKAI%29.jpg"],links:[['🔗 官方網站','https://www.marinepia.or.jp/','site'],['📸 Google圖片搜尋','https://www.google.com/search?q=マリンピア日本海+水族館&tbm=isch','photo']]},
+ajikan:{title:'郷土料理 味勘（松島）',desc:'松島在地知名海鮮料理餐廳，以當地新鮮牡蠣和各種海鮮料理聞名。松島灣是日本最重要的牡蠣產地之一，松島牡蠣個頭較小但風味濃郁，與廣島牡蠣截然不同。餐廳提供烤牡蠣、生牡蠣、牡蠣飯等多種烹調方式，也有海鮮定食套餐。建議配搭松島遊覽船之後前往用餐，享受完整的松島體驗。',imgs:[],links:[['📍 地圖導航','https://maps.app.goo.gl/cMG94wXDvtsJ6kaw9','site'],['📸 Google圖片搜尋','https://www.google.com/search?q=郷土料理+味勘+松島&tbm=isch','photo']]},
+campagne:{title:'Les Copains de Campagne（咖哩披薩）',desc:'隱藏在仙台近郊作並溫泉鄉山林中的小型法式餐廳，提供以當地食材製作的特色咖哩披薩，佐配精選葡萄酒。餐廳建築是一棟小木屋，森林環繞、氣氛靜謐，與附近的 Nikka 宮城峽蒸溜所形成絕佳的一日行程組合。⚠ 僅週末及假日營業，強烈建議提前預約，或先確認當天是否有位置。',imgs:[],links:[['🍽 Tabelog','https://tabelog.com/miyagi/A0401/A040101/4002028/','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=Les+Copains+de+Campagne+作並+仙台&tbm=isch','photo']]},
+dodan:{title:'どうだんの里（蕎麥麵）',desc:'位於仙台郊區作並・秋保エリア的傳統蕎麥麵店，以當地山泉水和手打蕎麥聞名。店名「どうだん」源自日本滿天星（燈台躑躅），春季盛開美麗白花。午餐時段提供多種蕎麥套餐，環境樸素自然，深受仙台在地人喜愛。去 Nikka 蒸溜所的路上順道前往，是完美的午餐選擇。',imgs:[],links:[['🍽 Tabelog','https://tabelog.com/miyagi/A0401/A040101/4002395/','article'],['📸 Google圖片搜尋','https://www.google.com/search?q=どうだんの里+蕎麦+作並&tbm=isch','photo']]},
+hotel:{title:'仙台大和魯內飯店',desc:'位於仙台駅東口步行約5分鐘，是日本知名的「大和魯內（Dormy Inn）」連鎖商務酒店。客房舒適，全館免費提供浴衣，大浴場設有溫泉（人工溫泉），並附設免費夜宵服務（夜鳴きそば）。飯店步行距離即可抵達 Toyota 租車取車點，是整趟旅程的出發基地和最後歸宿。地理位置優越，距離牛舌通り、仙台車站購物設施皆步行可達。',imgs:[],links:[['📸 Google照片','https://www.google.com/search?q=Dormy+Inn+仙台+飯店&tbm=isch','photo']]}};
       im.src=s;
       ph.appendChild(im);
     });
@@ -748,6 +816,50 @@ function closeInfo(){
   document.getElementById('infoOverlay').classList.remove('open');
   document.body.style.overflow='';
 }
+
+
+// ── SPLASH ──────────────────────────────────────────────────────────────────
+function initSplash(){
+  var splash=document.getElementById('splash');
+  if(!splash) return;
+  var slides=Array.from(document.querySelectorAll('.ss-slide'));
+  var dots=Array.from(document.querySelectorAll('.ss-dot'));
+  var bar=document.getElementById('ssBar');
+  var plEl=document.getElementById('ssPlace');
+  var sbEl=document.getElementById('ssSub');
+  var n=slides.length, cur=0, gone=false;
+  var PER=2100, TOTAL=n*PER;
+
+  function doExit(){
+    if(gone) return; gone=true;
+    splash.style.transition='opacity .9s ease';
+    splash.style.opacity='0';
+    splash.style.pointerEvents='none';
+    setTimeout(function(){splash.style.display='none';},950);
+  }
+  window.exitSplash=doExit;
+
+  // Progress bar
+  if(bar){ bar.style.transitionDuration=TOTAL+'ms'; setTimeout(function(){bar.style.width='100%';},30); }
+
+  // Slide ticker
+  var tid=setInterval(function(){
+    if(gone){clearInterval(tid);return;}
+    slides[cur].classList.remove('active'); dots[cur].classList.remove('on');
+    cur=(cur+1)%n;
+    slides[cur].classList.add('active'); dots[cur].classList.add('on');
+    if(plEl) plEl.textContent=slides[cur].dataset.place||'';
+    if(sbEl) sbEl.textContent=slides[cur].dataset.sub||'';
+  },PER);
+
+  // Auto exit
+  setTimeout(doExit, TOTAL+400);
+
+  // Click/tap to skip
+  splash.addEventListener('click', doExit);
+}
+// Run after everything else is set up
+setTimeout(initSplash, 0);
 </script>
 
 <div class="info-overlay" id="infoOverlay" onclick="closeInfo()"></div>
